@@ -6,23 +6,24 @@
 
 namespace hardware {
 
+// Generic buffer supporting both RGBPixel and GrayPixel types
 template <typename T>
     struct FrameBuffer {
-        int width;
-        int height;
+        int width; // Image width in pixels
+        int height; // Image height in pixels
         T* data;
 
+        // Allocates dynamic memory based on dimensions and pixel type
         FrameBuffer(int w, int h) : width(w), height(h) {
-            data = new T[width * height];
-            
+            data = new T[width * height];      
             #ifdef DEBUG
-                // typeid(T).name() returns the internal name of the type
                 std::cout << "[DEBUG] BUFFER_ALLOC: " << width << "x" << height 
                           << " | Size: " << (sizeof(T) * width * height) << " Bytes" 
                           << std::endl;
             #endif
         }
 
+        // Destructor to ensure allocated memory is released
         ~FrameBuffer() {
             if (data != nullptr) {
                 delete[] data;
@@ -32,6 +33,7 @@ template <typename T>
             }
         }
 
+        // Retrieves pixel using indexing: (y * width) + x
         T getPixel(uint32_t x, uint32_t y) const {
             return data[y * width + x];
         }
@@ -40,7 +42,6 @@ template <typename T>
             data[y * width + x] = value;
         }
     };
-
 }
 
 #endif
