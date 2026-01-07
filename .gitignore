@@ -1,0 +1,10 @@
+# Vim swap files
+*.swp
+
+# Image files (outputs/inputs)
+*.pgm
+*.ppm
+
+# Compiled binaries
+*.o
+mega_project
